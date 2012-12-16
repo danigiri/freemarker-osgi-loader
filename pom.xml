@@ -4,7 +4,7 @@
     <artifactId>freemarker-osgi-loader</artifactId>
     <packaging>bundle</packaging>
     
-    <version>1.0.14</version>
+    <version>1.0.14-SNAPSHOT</version>
     <name>Flexible OSGI freemarker template loader</name>
     <description>
         OSGi bundle that allows loading of freemarker templates from other bundles and fragments 
@@ -23,7 +23,7 @@ in an OSGi-friendly way.
     <properties>
         <developer.id_>danigiri</developer.id_>
         <scm.host_>github.com</scm.host_>
-        <github.global.server>github.com</github.global.server>
+        <!--github.global.server>github.com</github.global.server-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -46,7 +46,6 @@ in an OSGi-friendly way.
 		<connection>scm:git:git@i${scm.host_}:${developer.id_}/${project.artifactId}.git</connection>
 		<url>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</url>
 		<developerConnection>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</developerConnection>
-    <tag>freemarker-osgi-loader-1.0.14</tag>
   </scm>
 
     
@@ -76,12 +75,12 @@ in an OSGi-friendly way.
 		    <groupId>org.apache.maven.plugins</groupId>
 		    <artifactId>maven-release-plugin</artifactId>
 		    <version>2.3.2</version>
-		    <configuration>
+		    <!--configuration>
 		    	<goals>deploy ghDownloads:upload</goals>
-		    </configuration>
+		    </configuration-->
 		</plugin>
 
-		<plugin>
+		<!--plugin>
 			<groupId>com.github.github</groupId>
 			<artifactId>downloads-maven-plugin</artifactId>
 			<version>0.5</version>
@@ -90,7 +89,7 @@ in an OSGi-friendly way.
 				<override>true</override>
 				<includeAttached>true</includeAttached>
 			</configuration>
-		</plugin>
+		</plugin-->
 	    
         </plugins>
         
