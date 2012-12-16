@@ -49,11 +49,11 @@ in an OSGi-friendly way.
 	<distributionManagement>
 		<repository>
 			<id>github-danigiri-maven-repo-releases</id>
-			<url>ssh://git@github.com/danigiri/danigiri-maven-repo/raw/master/releases</url>
+			<url>scp://git@github.com/danigiri/danigiri-maven-repo/raw/master/releases</url>
 		</repository>
 		<snapshotRepository>
 			<id>danigiri-maven-repo-snapshots</id>
-			<url>ssh://git@github.com/cemerick/danigiri-maven-repo/raw/master/snapshots</url>
+			<url>scp://git@github.com/cemerick/danigiri-maven-repo/raw/master/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 
