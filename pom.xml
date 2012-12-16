@@ -4,7 +4,7 @@
     <artifactId>freemarker-osgi-loader</artifactId>
     <packaging>bundle</packaging>
     
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>Flexible OSGI freemarker template loader</name>
     <description>
         OSGi bundle that allows loading of freemarker templates from other bundles and fragments 
@@ -35,17 +35,29 @@ in an OSGi-friendly way.
             <url>http//dani.calidos.com</url>
             <roles>
                 <role>creator</role>
+                <role>developer</role>
             </roles>
             <timezone>+1</timezone>
         </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git@i${scm.host_}:${developer.id_}/${project.artifactId}.git</connection>
-        <url>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</url>
-        <developerConnection>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</developerConnection>
-  </scm>
+		<connection>scm:git:git@i${scm.host_}:${developer.id_}/${project.artifactId}.git</connection>
+		<url>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</url>
+		<developerConnection>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</developerConnection>
+	</scm>
+	<distributionManagement>
+		<repository>
+			<id>github-danigiri-maven-repo-releases</id>
+			<url>https://github.com/danigiri/danigiri-maven-repo/raw/master/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>danigiri-maven-repo-snapshots</id>
+			<url>https://github.com/cemerick/danigiri-maven-repo/raw/master/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 
+    
     <build>
         <plugins>
           <plugin>
