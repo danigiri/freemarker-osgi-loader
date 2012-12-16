@@ -4,7 +4,7 @@
     <artifactId>freemarker-osgi-loader</artifactId>
     <packaging>bundle</packaging>
     
-    <version>1.0.15-SNAPSHOT</version>
+    <version>1.0.15</version>
     <name>Flexible OSGI freemarker template loader</name>
     <description>
         OSGi bundle that allows loading of freemarker templates from other bundles and fragments 
@@ -46,6 +46,7 @@ in an OSGi-friendly way.
 		<connection>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</connection>
 		<url>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</url>
 		<developerConnection>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</developerConnection>
+    <tag>freemarker-osgi-loader-1.0.15</tag>
   </scm>
 
     
