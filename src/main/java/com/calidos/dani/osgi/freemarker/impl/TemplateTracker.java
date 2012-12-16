@@ -38,7 +38,6 @@ import freemarker.cache.TemplateLoader;
 import freemarker.cache.URLTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.TemplateException;
 
 /** Template tracker that tracks bundles added to the OSGi environment.
 *	Whenever there is a bundle that includes the manifest header 'Freemarker-Templates'

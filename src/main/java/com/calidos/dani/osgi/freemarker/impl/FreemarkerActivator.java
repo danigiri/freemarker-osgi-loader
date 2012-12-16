@@ -14,7 +14,7 @@
 *  limitations under the License.
 *//////////////////////////////////////////////////////////////////////////////
 
-package com.calidos.dani.osgi.freemarker;
+package com.calidos.dani.osgi.freemarker.impl;
 
 import java.util.Hashtable;
 
@@ -25,7 +25,6 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.BundleTracker;
 
-import com.calidos.dani.osgi.freemarker.impl.TemplateTracker;
 
 import freemarker.template.Configuration;
 
