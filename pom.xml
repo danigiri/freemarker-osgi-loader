@@ -76,7 +76,7 @@ in an OSGi-friendly way.
 		    <artifactId>maven-release-plugin</artifactId>
 		    <version>2.3.2</version>
 		    <configuration>
-		    	<preparationGoals>deploy ghDownloads:upload</preparationGoals>
+		    	<goals>deploy ghDownloads:upload</goals>
 		    </configuration>
 		</plugin>
 
