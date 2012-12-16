@@ -46,7 +46,6 @@ in an OSGi-friendly way.
 		<connection>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</connection>
 		<url>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</url>
 		<developerConnection>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</developerConnection>
-    <tag>freemarker-osgi-loader-1.0.14</tag>
   </scm>
 
     
