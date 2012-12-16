@@ -46,7 +46,6 @@ in an OSGi-friendly way.
 		<connection>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</connection>
 		<url>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</url>
 		<developerConnection>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</developerConnection>
-    <tag>HEAD</tag>
   </scm>
 
     
@@ -77,7 +76,7 @@ in an OSGi-friendly way.
 		    <artifactId>maven-release-plugin</artifactId>
 		    <version>2.3.2</version>
 		    <configuration>
-		    	<goals>deploy ghDownloads:upload</goals>
+		    	<preparationGoals>deploy ghDownloads:upload</preparationGoals>
 		    </configuration>
 		</plugin>
 
