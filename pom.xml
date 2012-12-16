@@ -4,7 +4,7 @@
     <artifactId>freemarker-osgi-loader</artifactId>
     <packaging>bundle</packaging>
     
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <name>Flexible OSGI freemarker template loader</name>
     <description>
         OSGi bundle that allows loading of freemarker templates from other bundles and fragments 
