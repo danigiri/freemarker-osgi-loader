@@ -23,7 +23,7 @@ in an OSGi-friendly way.
     <properties>
         <developer.id_>danigiri</developer.id_>
         <scm.host_>github.com</scm.host_>
-        <!--github.global.server>github.com</github.global.server-->
+        <github.global.server>github.com-upload</github.global.server>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
