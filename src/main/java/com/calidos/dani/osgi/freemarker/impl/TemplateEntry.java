@@ -21,7 +21,7 @@ import java.net.URL;
 
 import org.osgi.framework.Bundle;
 
-/**
+/** Freemarker Template entry identified by its "path/name.ftl" or "bundle://" URL
 *	@author daniel giribet
 *//////////////////////////////////////////////////////////////////////////////
 public class TemplateEntry {

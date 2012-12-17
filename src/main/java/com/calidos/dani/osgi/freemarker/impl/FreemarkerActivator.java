@@ -16,8 +16,11 @@
 
 package com.calidos.dani.osgi.freemarker.impl;
 
+import java.util.Collection;
 import java.util.Hashtable;
+import java.util.Iterator;
 
+import org.apache.log4j.Logger;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -40,11 +43,11 @@ import freemarker.template.Configuration;
 *//////////////////////////////////////////////////////////////////////////////
 public class FreemarkerActivator implements BundleActivator {
 	
+	protected static Logger log = Logger.getLogger(FreemarkerActivator.class);
 
-//	private Configuration	freemarkerConfig;
-	private TemplateTracker	templateTracker;
-	private BundleTracker	tracker;
-	private ServiceRegistration registration;
+	private TemplateTracker						templateTracker;
+	private BundleTracker<Object>				tracker;
+	private ServiceRegistration<Configuration> 	registration;
 	
 
 	/* (non-Javadoc)
@@ -54,33 +57,43 @@ public class FreemarkerActivator implements BundleActivator {
 	public void start(BundleContext context) throws Exception {
 		
 		
-		//ServiceReference serviceReference = context.getServiceReference(Configuration.class.getName());
-		ServiceReference[] serviceReferences = context.getServiceReferences(Configuration.class.getName(), "(preparedConfiguration=true)");
-		if (serviceReferences!=null && serviceReferences.length>0) {
-			Configuration freemarkerConfig = (Configuration) context.getService(serviceReferences[0]);
+		Collection<ServiceReference<Configuration>> serviceReferences = context.getServiceReferences(Configuration.class, "(preparedConfiguration=true)");
+
+		if (serviceReferences!=null && !serviceReferences.isEmpty()) {
+		
+			Configuration freemarkerConfig = getFreemarkerConfiguration(context, serviceReferences);
 			templateTracker = new TemplateTracker(freemarkerConfig);
-		} else {	
+		
+		} else {
+			
+			log.trace("Creating our own freemarker default configuration");
+			
 			templateTracker = new TemplateTracker();
 		}
 				
-		tracker = new BundleTracker(context, Bundle.RESOLVED, templateTracker);
+		tracker = new BundleTracker<Object>(context, Bundle.RESOLVED, templateTracker);
 	    tracker.open();
 	    
-	    // if there is an original service reference object we shouldn't have to publish it again
-	    if (serviceReferences==null) {
+	    // if there is an original service reference object we shouldn't have to publish it again as we're reusing it
+	    if (serviceReferences==null || serviceReferences.isEmpty()) {
+	    	
+	    	log.trace("Registering Freemarker dynamic configuration service");
+	    	
 	    	Hashtable<String, String> props = new Hashtable<String, String>(1);
 	    	props.put("dynamicConfiguration", "true");
-	    	registration = context.registerService(Configuration.class.getName(), templateTracker.getFreemarkerConfiguration(), props);
+	    	registration = context.registerService(Configuration.class, templateTracker.getFreemarkerConfiguration(), props);
+	    	
 	    }
+	    
 	} // start
-	
+
 
 	/* (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 *//////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void stop(BundleContext context) throws Exception {
-
+	
 		if (tracker!=null) {
 			tracker.close();
 		}
@@ -90,5 +103,17 @@ public class FreemarkerActivator implements BundleActivator {
 		}
 				
 	} // stop
+
+
+	private Configuration getFreemarkerConfiguration(BundleContext context,
+			Collection<ServiceReference<Configuration>> serviceReferences) {
+
+		Iterator<ServiceReference<Configuration>> iterator = serviceReferences.iterator();
+		ServiceReference<Configuration> configurationServiceReference = iterator.next();
+		Configuration freemarkerConfig = (Configuration) context.getService(configurationServiceReference);
+
+		return freemarkerConfig;
+
+	}
 
 }

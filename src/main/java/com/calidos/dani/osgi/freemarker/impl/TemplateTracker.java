@@ -59,7 +59,7 @@ import freemarker.template.DefaultObjectWrapper;
 *	to the environment for a while and then removed safely.
 * 	@author daniel giribet
 *//////////////////////////////////////////////////////////////////////////////
-public class TemplateTracker implements BundleTrackerCustomizer {
+public class TemplateTracker implements BundleTrackerCustomizer<Object> {
 
 	private static final String TEMPLATE_HEADER = "Freemarker-Templates";
 	
@@ -101,25 +101,20 @@ public class TemplateTracker implements BundleTrackerCustomizer {
 	}	// TemplateTracker
 
 
-	/**
-	* 
-	*//////////////////////////////////////////////////////////////////////////////
-	private void setupTemplateHolderStructures() {
-		templates = new HashMap<String, Stack<TemplateEntry>>();
-		templatesOfEachBundle = new HashMap<Long, Set<URL>>();
-	}
-	
-
 	/* (non-Javadoc)
 	 * @see org.osgi.util.tracker.BundleTrackerCustomizer#addingBundle(org.osgi.framework.Bundle, org.osgi.framework.BundleEvent)
 	 *//////////////////////////////////////////////////////////////////////////////
-	@SuppressWarnings("unchecked")
 	@Override
 	public Object addingBundle(Bundle bundle, BundleEvent event) {
 		
-		// we look for the header and act accordingly
+		// we look for the custom header and act accordingly
+		
+		if (log.isTraceEnabled()) {
+			log.trace("addingBundle callback for bundle "+bundle.getBundleId()+", we will check if it contains custom freemarker header");
+		}
 		
 		String templatesLocation = (String) bundle.getHeaders().get(TEMPLATE_HEADER);
+				
 		if (templatesLocation!=null) {
 			 
 			log.debug("Adding templates from bundle :"+bundle.getBundleId());
@@ -156,6 +151,8 @@ public class TemplateTracker implements BundleTrackerCustomizer {
 		// the bundle has been updated, the easiest way to update the templates if to act as if the
 		// bundle had been removed and then added anew
 		
+		log.debug("Modified template-holding bundle id:"+bundle.getBundleId());
+		
 		removedBundle(bundle,event,object);
 		addingBundle(bundle, event);		
 		
@@ -175,6 +172,7 @@ public class TemplateTracker implements BundleTrackerCustomizer {
 		String templatesLocation = (String) bundle.getHeaders().get(TEMPLATE_HEADER);
 		if (templatesLocation!=null) {
 	
+			log.debug("Removing templates from bundle:"+bundle.getBundleId());
 		
 			Set<URL> oldTemplatesFromModifiedBundle = templatesOfEachBundle.get(bundle.getBundleId());
 			
@@ -182,9 +180,9 @@ public class TemplateTracker implements BundleTrackerCustomizer {
 				throw new NullPointerException("Trying to remove or alter templates of a bundle that didn't have any");
 			}
 			
-			Iterator templateList = oldTemplatesFromModifiedBundle.iterator();
+			Iterator<URL> templateList = oldTemplatesFromModifiedBundle.iterator();
 			while (templateList.hasNext()) {
-				URL templateURL = (URL) templateList.next();
+				URL templateURL = templateList.next();
 				
 				String templateID = getTemplateID(templateURL, templatesLocation);
 				removeTemplateFromStack(bundle,templateURL,templateID);
@@ -213,6 +211,11 @@ public class TemplateTracker implements BundleTrackerCustomizer {
 			
 			@Override
 			protected URL getURL(String url) {
+		
+				if (log.isTraceEnabled()) {
+					log.trace("Getting template url="+url);
+				}
+				
 				Stack<TemplateEntry> templateStack = templates.get(url);
 				if (templateStack!=null) {
 					TemplateEntry templateStackTop = templateStack.peek();
@@ -222,7 +225,9 @@ public class TemplateTracker implements BundleTrackerCustomizer {
 					return null;
 				}
 				return null;
+
 			}
+
 		});
 		
 	}	// setupDynamicTemplateLoader
@@ -249,12 +254,25 @@ public class TemplateTracker implements BundleTrackerCustomizer {
 	} 	// addBundleTemplateLoaderTo
 
 
+	/**
+	* 
+	*//////////////////////////////////////////////////////////////////////////////
+	private void setupTemplateHolderStructures() {
+		templates = new HashMap<String, Stack<TemplateEntry>>();
+		templatesOfEachBundle = new HashMap<Long, Set<URL>>();
+	}
+
+
 	/** We add a template by its simplest name 'path/file.ftl', 'bundle://bundlename/path/file.ftl' and
 	* 	'bundle://bundlename:version/path/file.ftl'. We also keep track of the bundle that added the template
 	*	@param bundle that contains the template
 	*	@param templateURL the URL pointing to the template file itself
 	*//////////////////////////////////////////////////////////////////////////////
 	private void addTemplate(Bundle bundle, URL templateURL, String templatePathPrefix) {
+		
+		if (log.isTraceEnabled()) {
+			log.trace("Adding template on url="+templateURL);
+		}
 		
 		String templateID = getTemplateID(templateURL, templatePathPrefix);
 		addTemplateToStack(bundle, templateURL, templateID);
@@ -323,7 +341,7 @@ public class TemplateTracker implements BundleTrackerCustomizer {
 		String templatePath = templateURL.getPath();
 		
 		// first of all we add the simplest entry 'path/file'
-		String templateID = templatePath.substring(templatePathPrefix.length());
+		String templateID = templatePath.substring(templatePathPrefix.length()+1);
 		if (templateID.startsWith("/")) {
 			templateID = templateID.substring(1);
 		}

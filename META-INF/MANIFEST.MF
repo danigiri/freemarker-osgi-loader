@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Freemarker dynamic template loader
 Bundle-SymbolicName: com.calidos.dani.osgi.freemarker-osgi-loader
-Bundle-Version: 1.0.1
+Bundle-Version: 1.1.0
 Bundle-Vendor: CALIDOS
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Activator: com.calidos.dani.osgi.freemarker.impl.FreemarkerActivator
