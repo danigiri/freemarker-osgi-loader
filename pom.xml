@@ -1,126 +1,128 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.calidos.dani.osgi</groupId>
-    <artifactId>freemarker-osgi-loader</artifactId>
-    <packaging>bundle</packaging>
-    
-    <version>1.1.1-SNAPSHOT</version>
-    <name>Flexible OSGI freemarker template loader</name>
-    <description>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.calidos.dani.osgi</groupId>
+	<artifactId>freemarker-osgi-loader</artifactId>
+	<packaging>jar</packaging>
+
+	<version>1.1.1-SNAPSHOT</version>
+	<name>Flexible OSGI freemarker template loader</name>
+	<description>
         OSGi bundle that allows loading of freemarker templates from other bundles and fragments 
 in an OSGi-friendly way.
     </description>
-    <inceptionYear>2012</inceptionYear>
+	<inceptionYear>2012</inceptionYear>
 
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-            <comments>Copyright 2012 Daniel Giribet</comments>
-        </license>
-    </licenses>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<comments>Copyright 2012 Daniel Giribet</comments>
+		</license>
+	</licenses>
 
-    <properties>
-        <developer.id_>danigiri</developer.id_>
-        <scm.host_>github.com</scm.host_>
-        <github.global.server>github.com-upload</github.global.server>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
-    
-    <developers>
-        <developer>
-            <id>${developer.id_}</id>
-            <name>Daniel Giribet</name>
-            <email>dani AT calidos DOT cat</email>
-            <url>http//dani.calidos.com</url>
-            <roles>
-                <role>creator</role>
-                <role>developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-    </developers>
+	<properties>
+		<developer.id_>danigiri</developer.id_>
+		<scm.host_>github.com</scm.host_>
+		<github.global.server>github.com-upload</github.global.server>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
 
-    <scm>
+	<developers>
+		<developer>
+			<id>${developer.id_}</id>
+			<name>Daniel Giribet</name>
+			<email>dani AT calidos DOT cat</email>
+			<url>http//dani.calidos.com</url>
+			<roles>
+				<role>creator</role>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
+	<scm>
 		<connection>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</connection>
 		<url>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</url>
 		<developerConnection>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</developerConnection>
-    	<tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
-    
-    <build>
-	   
-        <plugins>
-          <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-compiler-plugin</artifactId>
-              <version>2.0.2</version>
-              <configuration>
-                <source>1.6</source>
-				<target>1.6</target>
-              </configuration>
-		  </plugin>
-		  
-		  <plugin>
-			<groupId>org.apache.felix</groupId>
-			<artifactId>maven-bundle-plugin</artifactId>
-			<version>2.3.7</version>
-			 <extensions>true</extensions>
-			<configuration>
-				<_include>META-INF/MANIFEST.MF</_include>
-			</configuration>
-		  </plugin>
-		  
-		  <!-- release management -->
-        <plugin>
-		    <groupId>org.apache.maven.plugins</groupId>
-		    <artifactId>maven-release-plugin</artifactId>
-		    <version>2.3.2</version>
-		    <configuration>
-		    	<goals>deploy ghDownloads:upload</goals>
-		    </configuration>
-		</plugin>
 
-		<plugin>
-			<groupId>com.github.github</groupId>
-			<artifactId>downloads-maven-plugin</artifactId>
-			<version>0.5</version>
-			<configuration>
-				<description>${project.version} release of ${project.name}</description>
-				<override>true</override>
-				<includeAttached>true</includeAttached>
-			</configuration>
-		</plugin>
-	    
-        </plugins>
-        
-        
-    </build>
+	<build>
 
-    <dependencies>
-    
-        <!-- compilation dependencies -->
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+
+			<plugin>	<!-- poor man's OSGI maven integration, just copy the damn manifest -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<archive>
+						<manifestFile>${basedir}/META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<!-- release management -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<goals>deploy ghDownloads:upload</goals>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>downloads-maven-plugin</artifactId>
+				<version>0.5</version>
+				<configuration>
+					<description>${project.version} release of ${project.name}</description>
+					<override>true</override>
+					<includeAttached>true</includeAttached>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+
+	</build>
+
+	<dependencies>
+
+		<!-- compilation dependencies -->
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
 			<version>2.3.19</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-    		<groupId>org.osgi</groupId>
-    		<artifactId>org.osgi.core</artifactId>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
 			<version>5.0.0</version>
 			<scope>compile</scope>
-		</dependency> 
-		<dependency>
-    		<groupId>log4j</groupId>
-    		<artifactId>log4j</artifactId>
-    		<version>1.2.17</version>
-    		<scope>compile</scope>
 		</dependency>
- 
-    </dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+			<scope>compile</scope>
+		</dependency>
+
+	</dependencies>
 
 </project>

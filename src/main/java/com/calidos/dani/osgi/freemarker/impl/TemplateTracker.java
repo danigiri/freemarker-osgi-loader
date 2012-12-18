@@ -19,6 +19,7 @@ package com.calidos.dani.osgi.freemarker.impl;
 
 
 import java.net.URL;
+import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -108,35 +109,51 @@ public class TemplateTracker implements BundleTrackerCustomizer<Object> {
 	public Object addingBundle(Bundle bundle, BundleEvent event) {
 		
 		// we look for the custom header and act accordingly
-		
-		if (log.isTraceEnabled()) {
-			log.trace("addingBundle callback for bundle "+bundle.getBundleId()+", we will check if it contains custom freemarker header");
-		}
-		
-		String templatesLocation = (String) bundle.getHeaders().get(TEMPLATE_HEADER);
-				
-		if (templatesLocation!=null) {
-			 
-			log.debug("Adding templates from bundle :"+bundle.getBundleId());
-			
-			Enumeration<URL> bundleTemplates = bundle.findEntries(templatesLocation, "*.ftl", true);
-			
-			HashSet<URL> templatesFromAddedBundle = new HashSet<URL>();
-			
-			while (bundleTemplates.hasMoreElements()) {
-			
-				// we get the template URL and add it to the general template list as well as the template list
-				// of that bundle
-				URL templateURL = bundleTemplates.nextElement();
-				addTemplate(bundle, templateURL,templatesLocation);
-				templatesFromAddedBundle.add(templateURL);
-				
-				log.debug("Added template: '"+templateURL+"'");
-			}
 	
-			templatesOfEachBundle.put(bundle.getBundleId(), templatesFromAddedBundle);
-			
+		long bundleId = bundle.getBundleId();
+	
+		if (log.isTraceEnabled()) {
+			log.trace("addingBundle callback for bundle " + bundleId + ", checking if it contains custom freemarker header");
 		}
+	
+		Dictionary<String, String> headers = bundle.getHeaders();
+		if (headers == null) {
+			log.warn("Null headers from bundle: " + bundleId);
+			return null;
+		}
+	
+		String templatesLocation = (String) headers.get(TEMPLATE_HEADER);
+		if (templatesLocation == null) {
+			log.warn("Null templates location value from bundle: " + bundleId);
+			return null;
+		}
+	
+		log.debug("Adding templates from bundle :" + bundleId);
+		if (log.isTraceEnabled()) {
+			log.trace("Using template location: " + templatesLocation);
+		}
+	
+		Enumeration<URL> bundleTemplates = bundle.findEntries(templatesLocation, "*.ftl", true);
+	
+		if (bundleTemplates == null) {
+			log.warn("Null template entries object for bundle: " + bundleId);
+			return null;
+		}
+	
+		HashSet<URL> templatesFromAddedBundle = new HashSet<URL>();
+	
+		while (bundleTemplates.hasMoreElements()) {
+	
+			// we get the template URL and add it to the general template list as well as the template
+			// list of that bundle
+			URL templateURL = bundleTemplates.nextElement();
+			addTemplate(bundle, templateURL, templatesLocation);
+			templatesFromAddedBundle.add(templateURL);
+	
+			log.info("Added template: '" + templateURL + "'");
+		}	
+		templatesOfEachBundle.put(bundleId, templatesFromAddedBundle);
+	
 		return null;
 		
 	}	// addingBundle
