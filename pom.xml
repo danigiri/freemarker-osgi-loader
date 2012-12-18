@@ -1,11 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.calidos.dani.osgi</groupId>
 	<artifactId>freemarker-osgi-loader</artifactId>
 	<packaging>jar</packaging>
 
-	<version>1.1.1-SNAPSHOT</version>
+	<version>1.1.1</version>
 	<name>Flexible OSGI freemarker template loader</name>
 	<description>
         OSGi bundle that allows loading of freemarker templates from other bundles and fragments 
@@ -47,7 +46,7 @@ in an OSGi-friendly way.
 		<connection>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</connection>
 		<url>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</url>
 		<developerConnection>scm:git:git@${scm.host_}:${developer.id_}/${project.artifactId}.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>freemarker-osgi-loader-1.1.1</tag>
 	</scm>
 
 
