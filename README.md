@@ -10,6 +10,10 @@ For now we're releasing directly to github using the maven release plugin tough 
 Tips and tricks
 ===============
 
-Use ```
-mvn release:prepare release:perform -Darguments='-DaltDeploymentRepository=REPO::default::file:/LOCAL-PATH/danigiri-maven-repo/releases'
+Use 
 ```
+mvn release:prepare \
+    release:perform \
+    -Darguments='-DaltDeploymentRepository=REPO::default::file:/LOCAL-PATH/MAVEN-REPO'
+```
+to automatically release to GitHub and store the final artifact in the specified local repo (for instance ~/.m2/repository)
